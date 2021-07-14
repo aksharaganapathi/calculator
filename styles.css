@@ -1,0 +1,79 @@
+body, input, textarea, button{
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+h1{
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+#calculator{
+    background-color: rgb(184, 180, 180);
+    width: 400px;
+    height: 600px;
+    margin:auto;
+    margin-top: 3em;
+    border-radius: 10px;
+    border: 3px solid black;
+}
+
+.screen{
+    background-color: rgb(236, 229, 229);
+    width: 360px;
+    height: 80px;
+    margin: auto;
+    margin-top: 1.5em;
+    border-radius: 10px;
+    border: 3px solid black;
+    text-align: right;
+}
+
+.btn-div{
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.main{
+    padding: 20px;
+    margin: 10px;
+    width: 170px;
+    border-radius: 10px;
+    border: 3px solid black;
+    cursor: pointer;
+    background-color: brown;
+    color: white;
+}
+
+.main:hover{
+    background-color: rgb(146, 43, 43);
+}
+
+.dark{
+    background-color: rgb(110, 33, 33);
+}
+
+.btn-group{
+    display: block;
+    text-align: center;
+}
+
+.number{
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: 3px solid black;
+    cursor: pointer;
+}
+
+.number:hover{
+    background-color: rgb(231, 229, 229);
+}
+
+.darker{
+    background-color: rgb(167, 158, 158);
+}
+
