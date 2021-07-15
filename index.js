@@ -120,8 +120,7 @@ function calculation(){
 
     if(firstNum.toString().length > 12){
         alert("Cannot display such large values. Please try again.");
-        firstNum = 0;
-        secondNum = 0;
+        numArr = [];
         displayValue = ""
         chosenOperator = "";
         document.getElementById("visual").textContent = displayValue;
