@@ -1,6 +1,6 @@
+//global vars
 let displayValue = "";
-let firstNum = 0;
-let secondNum = 0;
+let numArr = []
 let chosenOperator = "";
 
 //logic
@@ -43,7 +43,7 @@ function operate(operator, num1, num2){
     }
 }
 
-//animations and data
+//animations
 const buttons = document.querySelectorAll(".actual")
 buttons.forEach(function(currentBtn){
     currentBtn.addEventListener('click', function(){
@@ -72,8 +72,10 @@ numbersAndOperations.forEach(function(currentBtn){
     })
 });
 
+//data
 document.getElementById("clear").addEventListener("click", function(){
     displayValue = "";
+    numArr = [];
     document.getElementById("visual").textContent = displayValue;
 })
 
@@ -83,17 +85,35 @@ document.getElementById("switcher").addEventListener("click", function(){
 })
 
 const operators = document.querySelectorAll(".operation");
-operators.forEach(function(currentBtn){
+operators.forEach(function(currentBtn){    
     currentBtn.addEventListener("click", function(){
+
+        numArr.push(displayValue);
+
+        if(numArr.length == 2){
+            calculation();
+        }
+
         chosenOperator = currentBtn.value;
-        firstNum = parseFloat(displayValue);
         displayValue = "";
+
     })
 })
 
 document.getElementById("submit").addEventListener("click", function(){
-    secondNum = parseFloat(displayValue);
-    firstNum = operate(chosenOperator, firstNum, secondNum);
+    numArr.push(parseFloat(displayValue));
+    calculation();
+});
+
+function calculation(){
+    firstNum = operate(chosenOperator, numArr[0], numArr[1]);
+    numArr.pop();
+    numArr.pop();
+
+    if(!(Number.isInteger(firstNum))){
+        firstNum = firstNum.toFixed(3);
+    }
+
 
     if(firstNum.toString().length > 12){
         alert("Cannot display such large values. Please try again.");
@@ -106,7 +126,6 @@ document.getElementById("submit").addEventListener("click", function(){
     }
 
     displayValue = firstNum.toString();
+    numArr.push(displayValue);
     document.getElementById("visual").textContent = displayValue;
-})
-
-
+}
