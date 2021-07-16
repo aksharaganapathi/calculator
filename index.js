@@ -87,7 +87,10 @@ const operators = document.querySelectorAll(".operation");
 operators.forEach(function(currentBtn){    
     currentBtn.addEventListener("click", function(){
 
-        numArr.push(parseFloat(displayValue));
+        if(numArr.indexOf(parseFloat(displayValue)) == -1){
+            numArr.push(parseFloat(displayValue));
+        }
+
         console.log("og display val: " + displayValue);
         console.log(numArr);
 
@@ -129,6 +132,6 @@ function calculation(){
 
     displayValue = firstNum.toString();
     console.log("this is display val: " + displayValue);
-    numArr.push(displayValue);
+    numArr.push(parseFloat(displayValue));
     document.getElementById("visual").textContent = displayValue;
 }
