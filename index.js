@@ -14,6 +14,9 @@ function subtract(a, b){
 function divide(a, b){
     if(b == 0){
         alert("Divide by 0 error");
+        displayValue = "";
+        numArr = []
+        chosenOperator = "";
         return;
     }
     return a / b;
@@ -89,6 +92,11 @@ operators.forEach(function(currentBtn){
 
         if(numArr.indexOf(parseFloat(displayValue)) == -1){
             numArr.push(parseFloat(displayValue));
+        }
+
+        if(numArr[0] == (displayValue * -1)){
+            numArr.pop();
+            numArr[0] = displayValue;
         }
 
         console.log("og display val: " + displayValue);
