@@ -100,9 +100,6 @@ operators.forEach(function(currentBtn){
             numArr[0] = displayValue;
         }
 
-        console.log("og display val: " + displayValue);
-        console.log(numArr);
-
         if(numArr.length == 2){
             calculation();
         }
@@ -119,7 +116,6 @@ document.getElementById("submit").addEventListener("click", function(){
 });
 
 function calculation(){
-    console.log(numArr);
     firstNum = operate(chosenOperator, numArr[0], numArr[1]);
     
     if(firstNum == undefined){
@@ -128,7 +124,6 @@ function calculation(){
 
     numArr.pop();
     numArr.pop();
-    console.log(numArr);
 
     if(!(Number.isInteger(firstNum))){
         firstNum = firstNum.toFixed(3);
