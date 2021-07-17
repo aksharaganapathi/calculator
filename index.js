@@ -17,6 +17,7 @@ function divide(a, b){
         displayValue = "";
         numArr = []
         chosenOperator = "";
+        document.getElementById("visual").textContent = displayValue;
         return;
     }
     return a / b;
@@ -120,6 +121,11 @@ document.getElementById("submit").addEventListener("click", function(){
 function calculation(){
     console.log(numArr);
     firstNum = operate(chosenOperator, numArr[0], numArr[1]);
+    
+    if(firstNum == undefined){
+        return;
+    }
+
     numArr.pop();
     numArr.pop();
     console.log(numArr);
