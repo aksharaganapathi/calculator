@@ -1,59 +1,54 @@
 let displayValue = "";
-let numArr = []
+let numArr = [];
 let chosenOperator = "";
 
-//logic
-function add(a, b){
-    return a + b;
+function add(a, b){ 
+    return a + b; 
 }
 
-function subtract(a, b){
-    return a - b;
+function subtract(a, b){ 
+    return a - b; 
+}
+
+function multiply(a, b){ 
+    return a * b; 
 }
 
 function divide(a, b){
-    if(b == 0){
+    if(b === 0){
         alert("Divide by 0 error");
-        displayValue = "";
-        numArr = []
-        chosenOperator = "";
-        document.getElementById("visual").textContent = displayValue;
-        return;
+        resetCalculator();
+        return null; 
     }
     return a / b;
 }
 
-function multiply(a, b){
-    return a * b;
+function resetCalculator() {
+    displayValue = "";
+    numArr = [];
+    chosenOperator = "";
+    document.getElementById("visual").textContent = "0";
 }
 
-//main function
 function operate(operator, num1, num2){
-    if(operator == "+"){
-        return add(num1, num2);
-    }
-
-    if(operator == "/"){
-        return divide(num1, num2);
-    }
-
-    if(operator == "*"){
-        return multiply(num1, num2);
-    }
-
-    if(operator == "-"){
-        return subtract(num1, num2);
+    switch(operator) {
+        case "+": return add(num1, num2);
+        case "-": return subtract(num1, num2);
+        case "*": return multiply(num1, num2);
+        case "/": return divide(num1, num2);
+        default: return num2; 
     }
 }
 
-//animations
-const buttons = document.querySelectorAll(".actual")
+const buttons = document.querySelectorAll(".actual");
 buttons.forEach(function(currentBtn){
     currentBtn.addEventListener('click', function(){
+        if (currentBtn.value === "." && displayValue.includes(".")) return;
+        
         displayValue += currentBtn.value;
         document.getElementById("visual").textContent = displayValue.substring(0, 12);
     });
-  });
+});
 
 const main = document.querySelectorAll(".main");
 main.forEach(function(currentBtn){
@@ -72,75 +67,63 @@ numbersAndOperations.forEach(function(currentBtn){
         setTimeout(function(){
             currentBtn.classList.remove("darker");
         }, 200);
-    })
+    });
 });
 
-//data
-document.getElementById("clear").addEventListener("click", function(){
-    displayValue = "";
-    numArr = [];
-    document.getElementById("visual").textContent = displayValue;
-})
+document.getElementById("clear").addEventListener("click", resetCalculator);
 
 document.getElementById("switcher").addEventListener("click", function(){
-    displayValue = parseFloat(displayValue) * -1;
-    document.getElementById("visual").textContent = displayValue.toString();
-})
+    if (!displayValue) return;
+    displayValue = (parseFloat(displayValue) * -1).toString();
+    document.getElementById("visual").textContent = displayValue;
+});
 
 const operators = document.querySelectorAll(".operation");
 operators.forEach(function(currentBtn){    
     currentBtn.addEventListener("click", function(){
-
-        if(numArr.indexOf(parseFloat(displayValue)) == -1){
+        if (displayValue !== "") {
             numArr.push(parseFloat(displayValue));
         }
 
-        if(numArr[0] == (displayValue * -1)){
-            numArr.pop();
-            numArr[0] = displayValue;
-        }
-
-        if(numArr.length == 2){
+        if (numArr.length === 2 && chosenOperator) {
             calculation();
+        } else if (numArr.length === 0) {
+            numArr.push(0);
         }
 
         chosenOperator = currentBtn.value;
-        displayValue = "";
-
-    })
-})
+        displayValue = ""; 
+    });
+});
 
 document.getElementById("submit").addEventListener("click", function(){
-    numArr.push(parseFloat(displayValue));
-    calculation();
+    if (displayValue !== "" && chosenOperator !== "") {
+        numArr.push(parseFloat(displayValue));
+        calculation();
+        chosenOperator = ""; 
+    }
 });
 
 function calculation(){
-    firstNum = operate(chosenOperator, numArr[0], numArr[1]);
+    if (numArr.length < 2) return;
+
+    let result = operate(chosenOperator, numArr[0], numArr[1]);
     
-    if(firstNum == undefined){
+    if(result === null){
         return;
     }
 
-    numArr.pop();
-    numArr.pop();
-
-    if(!(Number.isInteger(firstNum))){
-        firstNum = firstNum.toFixed(3);
+    if(!Number.isInteger(result)){
+        result = parseFloat(result.toFixed(3));
     }
 
-
-    if(firstNum.toString().length > 12){
+    if(result.toString().length > 12){
         alert("Cannot display such large values. Please try again.");
-        numArr = [];
-        displayValue = ""
-        chosenOperator = "";
-        document.getElementById("visual").textContent = displayValue;
+        resetCalculator();
         return;
     }
 
-    displayValue = firstNum.toString();
-    console.log("this is display val: " + displayValue);
-    numArr.push(parseFloat(displayValue));
+    numArr = [result]; 
+    displayValue = result.toString();
     document.getElementById("visual").textContent = displayValue;
 }
